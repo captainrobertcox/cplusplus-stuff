@@ -20,28 +20,28 @@ class Vec3d {
     Vec3d(const Vec3d &V); // Copy Constructor
 
     void set(double xi, double yi, double zi, double wi=1.0);
-    double length();
+    double length() const;
     void normalize();
     Vec3d& operator-(); // negate
     //void operator=(const Vec3d &V); // assignment overload (not necessary without pointers)
     void operator+=(const Vec3d &V);
-    Vec3d operator+(const Vec3d &V);
+    Vec3d operator+(const Vec3d &V) const;
     void operator+=(double d); // add scalar
-    Vec3d operator+(double d);
+    Vec3d operator+(double d) const;
     void operator-=(const Vec3d &V);
-    Vec3d operator-(const Vec3d &V);
+    Vec3d operator-(const Vec3d &V) const;
     void operator-=(double d); // subtract scalar
-    Vec3d operator-(double d);
+    Vec3d operator-(double d) const;
     void operator*=(double d); // scale up
-    Vec3d operator*(double d);
+    Vec3d operator*(double d) const;
     void operator/=(double d); // scale down
-    Vec3d operator/(double d);
-    bool operator==(const Vec3d &V); // compare
+    Vec3d operator/(double d) const;
+    bool operator==(const Vec3d &V) const; // compare
 
     double operator*(const Vec3d &V) const; // dot product
-    Vec3d proj(const Vec3d &V); // projection
+    Vec3d proj(const Vec3d &V) const; // projection
     void cross(const Vec3d &V1, const Vec3d &V2); // cross product
-    Vec3d operator/(const Vec3d &V); // also cross product
+    Vec3d operator/(const Vec3d &V) const; // also cross product
 
 
     double x, y, z, w;
@@ -65,7 +65,7 @@ void Vec3d::set(double xi, double yi, double zi, double wi){
   x=xi; y=yi; z=zi; w=wi;
 }
 
-double Vec3d::length(){
+double Vec3d::length() const{
   return sqrt(x*x + y*y + z*z);
 }
 
@@ -84,7 +84,7 @@ void Vec3d::operator+=(const Vec3d &V){
   x+=V.x; y+=V.y; z+=V.z;
 }
 
-Vec3d Vec3d::operator+(const Vec3d &V){
+Vec3d Vec3d::operator+(const Vec3d &V) const{
   return Vec3d(x+V.x, y+V.y, z+V.z);
 }
 
@@ -92,7 +92,7 @@ void Vec3d::operator+=(double d){
   x+=d; y+=d; z+=d;
 }
 
-Vec3d Vec3d::operator+(double d){
+Vec3d Vec3d::operator+(double d) const{
   return Vec3d(x+d, y+d, z+d);
 }
 
@@ -100,7 +100,7 @@ void Vec3d::operator-=(const Vec3d &V){
   x-=V.x; y-=V.y; z-=V.z;
 }
 
-Vec3d Vec3d::operator-(const Vec3d &V){
+Vec3d Vec3d::operator-(const Vec3d &V) const{
   return Vec3d(x-V.x, y-V.y, z-V.z);
 }
 
@@ -108,7 +108,7 @@ void Vec3d::operator-=(double d){
   x-=d; y-=d; z-=d;
 }
 
-Vec3d Vec3d::operator-(double d){
+Vec3d Vec3d::operator-(double d) const{
   return Vec3d(x-d, y-d, z-d);
 }
 
@@ -116,7 +116,7 @@ void Vec3d::operator*=(double d){
   x*=d; y*=d; z*=d;
 }
 
-Vec3d Vec3d::operator*(double d){
+Vec3d Vec3d::operator*(double d) const{
   return Vec3d(x*d, y*d, z*d);
 }
 
@@ -124,11 +124,11 @@ void Vec3d::operator/=(double d){
   x/=d; y/=d; z/=d;
 }
 
-Vec3d Vec3d::operator/(double d){
+Vec3d Vec3d::operator/(double d) const{
   return Vec3d(x/d, y/d, z/d);
 }
 
-bool Vec3d::operator==(const Vec3d &V){
+bool Vec3d::operator==(const Vec3d &V) const{
   return ((abs(x-V.x)<1.0e-20) && (abs(y-V.y)<1.0e-20) && (abs(z-V.z)<1.0e-20));
 }
 
@@ -136,7 +136,7 @@ double Vec3d::operator*(const Vec3d &V) const { // dot product, perpendicular=0,
   return (x*V.x + y*V.y + z*V.z);
 }
 
-Vec3d Vec3d::proj(const Vec3d &V){
+Vec3d Vec3d::proj(const Vec3d &V) const{
   double d = (V* *this) / (V*V);
   return Vec3d(V.x*d, V.y*d, V.z*d);
 }
@@ -147,7 +147,7 @@ void Vec3d::cross(const Vec3d &V1, const Vec3d &V2){
   z = V1.x * V2.y - V1.y * V2.x;
 }
 
-Vec3d Vec3d::operator/(const Vec3d &V){
+Vec3d Vec3d::operator/(const Vec3d &V) const{
   return Vec3d(y*V.z - z * V.y, z*V.x - x*V.z, x*V.y - y*V.x);
 }
 

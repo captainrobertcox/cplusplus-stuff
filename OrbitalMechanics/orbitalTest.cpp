@@ -57,12 +57,6 @@ int main(){
   cout << "State Vector V (km/s): " << V << endl;
   oe = oe_from_sv(R,V);
   displayOE(oe);
-  //for (int i = 0; i < 100000; i++){
-    //sv_from_oe(R, V, oe);
-    //oe = oe_from_sv(R, V);
-  //}
-  //cout << endl << "After 100000 cycles:" << endl;
-  //displayOE(oe);
 
   Vec3d R1(-294.32, 4265.1, 5986.7);
   Vec3d R2(-1365.4, 3637.6, 6346.8);
@@ -186,33 +180,34 @@ int main(){
 
   double m0;
   m0 = rocket(0.10, 400.0, 0.15, 350.0, 0.20, 300.0, 5000, 10);
-  cout << endl << "rocket stage 1 mass ratio .1, isp 400, stage 2 mass ratio .15, isp 350, stage 3 mass ratio .2, isp 300, payload 5000, dv 10: " << endl;
-  cout << "Total rocket mass (191,200): " << m0 << endl;
+  cout << "rocket stage 1 mass ratio .1, isp 400, stage 2 mass ratio .15, isp 350, stage 3 mass ratio .2, isp 300, payload 5000, dv 10: " << endl;
+  cout << "Total rocket mass (191,200): " << m0 << endl << endl;
   m0 = rocket(0.2, 300.0, 0.3, 235.0, 0.0, 0.0, 10.0, 6.2);
-  cout << endl << "rocket stage 1 mass ratio .2, isp 300, stage 2 mass ratio .3, isp 235, payload 10kg, dV 6.2km/s:" << endl;
-  cout << "Total rocket mass (1125): " << m0 << endl;
+  cout << "rocket stage 1 mass ratio .2, isp 300, stage 2 mass ratio .3, isp 235, payload 10kg, dV 6.2km/s:" << endl;
+  cout << "Total rocket mass (1125): " << m0 << endl << endl;
   //m0 = rocket(0.142857, 290.0, 0.047619, 450.0, 0.0, 0.0, 114000, 9.686);
   //cout << "Total rocket mass (2,424,000): " << m0 << endl;
   double mPL = payload(150000.0, 900000.0, 290.0, 60000.0, 1200000.0, 415.0, 8.094 + 2.0 - KSC_Rotation_Vel);
-  cout << endl << "stage 1: 2 solids, each 525000 total mass, 450000 propellant mass, isp 290. stage 2: 2 liquids, each empty mass 30000, propellant mass 600000, isp 450. 300 km orbit, 2km/s drag loss, from KSC:" << endl;
+  cout << endl << "stage 1: 2 solids, each 525000 total mass, 450000 propellant mass, isp 290. stage 2: 2 liquids, each empty mass 30000, propellant mass 600000, isp 415. 300 km orbit, 2km/s drag loss, from KSC:" << endl;
   cout << "Payload mass (114,000): " << mPL << endl;
 
-  double Vbo = deltaV(150000.0, 900000.0, 290.0, 60000.0, 1200000.0, 450.0, 0.0, 0.0, 0.0, 114000.0);
-  cout << endl << "stage 1: empty mass 150000, propellant mass 900000, isp 290. stage 2: empty mass 60000, propellant mass 1200000, isp 450. payload 114000." << endl;
+  double Vbo = deltaV(150000.0, 900000.0, 290.0, 60000.0, 1200000.0, 415.0, 0.0, 0.0, 0.0, 116262.0);
+  cout << endl << "stage 1: empty mass 150000, propellant mass 900000, isp 290. stage 2: empty mass 60000, propellant mass 1200000, isp 415. payload 116262." << endl;
   cout << "Delta-V at burnout: " << Vbo << endl;
 
   cout << endl << "Escape velocity from Earth's surface: " << escapeV() << endl;
   cout << "Orbital velocity at 300 km: " << orbitalV(300.0) << endl;
-  cout << "Delta-V to acheive 300 km orbit: " << acheiveOrbitDeltaV(300.0) << endl;
-  cout << "dV to LEO (300 km): " << dV_LEO(300.0) << endl;
+  cout << "Delta-V to acheive 300 km orbit, method 1: " << acheiveOrbitDeltaV(300.0) << endl;
+  cout << "dV to LEO (300 km), method 2: " << dV_LEO(300.0) << endl;
   cout << "Delta-V to acheive 300 km orbit (+ 2km/s for drag, gravity, and buffer): " << acheiveOrbitDeltaV(300.0) + 2.0 << endl;
   cout << "Delta-V to acheive 300 km orbit (+ 20% for drag, gravity, and buffer): " << acheiveOrbitDeltaV(300.0) * 1.2 << endl;
-  cout << "Delta-V to 300 km orbit, heading East from KSC (latitude 28.5729): " << acheiveOrbitDeltaV(300.0, KSC_Latitude) << endl;
-  cout << "dV to LEO from KSC, 300 km orbit, heading East: " << dV_LEO_from_KSC(300.0) << endl;
+  cout << "Delta-V to 300 km orbit, heading East from KSC (latitude 28.5729), method 1: " << acheiveOrbitDeltaV(300.0, KSC_Latitude) << endl;
+  cout << "dV to LEO from KSC, 300 km orbit, heading East, method 2: " << dV_LEO_from_KSC(300.0) << endl;
   cout << "Delta-V to 300 km orbit, heading East from KSC (latitude 28.5729) (+2km/s loss...): " << acheiveOrbitDeltaV(300.0, KSC_Latitude) + 2.0 << endl;
   cout << "Delta-V to 300 km orbit, heading East from Equator (latitude 0.001) (+2km/s loss...): " << acheiveOrbitDeltaV(300.0, 0.001) + 2.0 << endl;
   cout << "Delta-V to 200 km orbit, heading 45 azimuth from KSC (+2km/s loss): " << acheiveOrbitDeltaV(200.0, KSC_Latitude, 45.0) + 2.0 << endl;
   cout << endl << "R: (0.0, -cos(28.5729)*Re, sin(28.5729)*Re), V: (0.408456, 0.0, 0.0)" << endl;
+
   R.set(0.0, -cos(28.5729*3.1415927/180.0)*6378, sin(28.5729*3.1415927/180.0)*6378);
   V.set(0.408456, 0.0, 0.0);
   oe = oe_from_sv(R, V);

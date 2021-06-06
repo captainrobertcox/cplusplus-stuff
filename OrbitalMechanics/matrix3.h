@@ -51,7 +51,7 @@ class Matrix3{
     Matrix3(const Matrix3& A); // copy constructor
     Matrix3(double d11, double d12, double d13, double d21, double d22, double d23, double d31, double d32, double d33);
     //const Matrix3& operator=(const Matrix3& A); // overload assignment operator
-    bool operator==(const Matrix3& A); // comparison
+    bool operator==(const Matrix3& A) const; // comparison
     void operator+=(const Matrix3& A);
     void operator-=(const Matrix3& A);
     void operator*=(const double d);
@@ -60,7 +60,7 @@ class Matrix3{
     Matrix3 operator*(const Matrix3& A) const;
     Vec3d operator*(const Vec3d& V) const;
     void operator/=(const double d);
-    double operator[](int element);
+    double operator[](int element) const;
     void Set(double d11, double d12, double d13, double d21, double d22, double d23, double d31, double d32, double d33);
     void Reset(); // set Elements to zero
     void Identity(); // make this the identity matrix
@@ -112,7 +112,7 @@ void Matrix3::Identity(){
   m11 = m22 = m33 = 1.0;
 }
 
-bool Matrix3::operator==(const Matrix3& A){
+bool Matrix3::operator==(const Matrix3& A) const{
   return memcmp(Elements, A.Elements, sizeof(Elements));
 }
 
@@ -172,7 +172,7 @@ Vec3d Matrix3::operator*(const Vec3d& V) const{
   return A;
 }
 
-double Matrix3::operator[](int element){
+double Matrix3::operator[](int element) const{
   return Elements[element];
 }
 

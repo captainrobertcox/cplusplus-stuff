@@ -1,3 +1,8 @@
+/*
+  Orbital Mechanics functions taken from Orbital Mechanics for Engineering Students, by Howard D. Curtis,
+  Embry-Riddle Aeronautical University, Daytona Beach, FL. Copyright 2005. Published by Elsevier, Oxford.
+*/
+
 #ifndef ORBITAL_H
 #define ORBITAL_H
 
@@ -98,7 +103,6 @@ double deltaV(double mE1, double mp1, double isp1, double mE2, double mp2, doubl
 double escapeV(double altitude = 0.0, double radiusBody = RadiusEarth, double massBody = MassEarth){ return sqrt(2*Gconst*massBody/(radiusBody+altitude));}
 double orbitalV(double altitude = 0.0, double radiusBody = RadiusEarth, double massBody = MassEarth){ return sqrt(Gconst*massBody/(radiusBody + altitude));}
 double acheiveOrbitDeltaV(double orbitAltitude = 0.0, double latitude = 0.0, double incl = 0.0, double radiusBody = RadiusEarth, double bodyRotationVel = EarthEquatorialRotationVel, double g = g0){return sqrt(g*(radiusBody + orbitAltitude)) - (latitude!=0?(bodyRotationVel*cos(latitude*deg)*cos(incl*deg)):0);}
-//};
 double dV_LEO(double altitude = 0.0){altitude += RadiusEarth; return sqrt(2.0*(-MU/(2.0*altitude) + MU/RadiusEarth));}
 double dV_LEO_from_KSC(double altitude = 0.0, double incl = 0.0){return (dV_LEO(altitude) - KSC_Rotation_Vel*cos(incl*deg));}
 
@@ -283,24 +287,24 @@ void /*Orbital::*/RV_from_R0V0(Vec3d &R, Vec3d &V, Vec3d R0, Vec3d V0, double t,
   // Magnitudes of R0 and V0
   double r0 = R0.length();
   double v0 = V0.length();
-  cout << "r0: " << r0 << ", v0: " << v0 << endl;
+  //cout << "r0: " << r0 << ", v0: " << v0 << endl;
 
   // Initial radial velocity
   double vr0 = (R0*V0)/r0;
-  cout << "vr0: " << vr0 << endl;
+  //cout << "vr0: " << vr0 << endl;
 
   // reciprocal of the semimajor axis from the energy eqn
   double alpha = 2/r0 - v0*v0/mu;
-  cout << "alpha: " << alpha << endl;
+  //cout << "alpha: " << alpha << endl;
 
   // get universal anomaly
   double x = kepler_U(t, r0, vr0, alpha);
-  cout << "x: " << x << endl;
+  //cout << "x: " << x << endl;
 
   // get f and g
   double f, g;
   f_and_g(f, g, x, t, r0, alpha);
-  cout << "f: " << f << ", g: " << g << endl;
+  //cout << "f: " << f << ", g: " << g << endl;
 
   // compute final position vector
   R = R0*f + V0*g;
@@ -439,8 +443,8 @@ void /*Orbital::*/sv_from_oe(Vec3d& R, Vec3d& V, orbitalElements oe, double mu){
   //cout << "Q_px: " << Q_px << endl;
   R = Q_px * Rp;
   V = Q_px * Vp;
-  cout << "R: " << R << endl;
-  cout << "V: " << V << endl;
+  //cout << "R: " << R << endl;
+  //cout << "V: " << V << endl;
 }
 
 bool /*Orbital::*/gibbs(Vec3d& V2, Vec3d R1, Vec3d R2, Vec3d R3, double mu){
